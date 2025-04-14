@@ -1,22 +1,25 @@
-class Lapiz{
-                     //fill
-    constructor(x, y, color, context, style ){
+class Lapiz extends Paint{
+                     //color
+    constructor(x, y, fill, context, style ){
+        
+        super(x, y, fill, context);
+        
+        
         this.antx = x;
         this.anty = y;
-       
-        this.x = x;
-        this.y = y;
-        this.color = color;
-        this.ctx = context;
-        this.style =style ;
-
+        // this.width = width;
+        // this.height = height;
+         this.style = style;
     }
 
    draw(){
+    super.draw();
        this.ctx.beginPath();
-       this.ctx.strokeStyle = this.color;
-       this.ctx.fillStyle = this.color;
-       this.ctx.fillRect(this.x, this.y, 2, 2);
+       this.ctx.strokeStyle = this.fill;
+       this.ctx.fillStyle = this.fill;
+    //    this.ctx.fillRect(this.x, this.y, 2, 2);
+       this.ctx.moveTo(this.antx, this.anty);
+       this.ctx.lineTo(this.x, this.y);
        this.ctx.stroke();
        this.ctx.closePath();
    }
@@ -31,12 +34,12 @@ class Lapiz{
 
 
 
-    getColor(){
-        return this.color;
+    getFill(){
+        return this.fill;
     }
 
-    setColor(color){
-        this.color = color;
+    setColor(fill){
+        this.fill = fill;
     }
 
     getStyle(){
@@ -74,21 +77,15 @@ class Lapiz{
    
      }
    
-    setPosition (x,y){
-       this.posX=x;
-       this.posY =y;
-     
+     setPosition(x, y) {
+        this.x = x;
+        this.y = y;
     }
+    
 
    
     
-    isPointInside(x,y){
-           
-       
-        return !(x < this.posX || x > this.posX + this.width || y < this.posY || y > this.posY + this.height);
-
-
-      }
+  
 
 
       

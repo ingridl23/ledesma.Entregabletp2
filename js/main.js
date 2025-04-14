@@ -1,102 +1,63 @@
-
-
-//  @type (HTMLCanvasElement)
-
-let canvas =document.querySelector('#canvas');
+// ###################################  rincon declarativo global #########################################
+let canvas = document.querySelector('#canvas');
 let ctx = canvas.getContext('2d');
 
-
 let canvasWidth = canvas.width;
-let canvasHeight = canvas.height
+let canvasHeight = canvas.height;
 
-// boton derecho del mouse
 let mouseDown = false;
-let lapiz = null
-let mouseUp= false;
-let mousemove = false;
-// mouse down boton presionado
-
-canvas.addEventListener('mousedown', (e) => {
-   mouseDown = true;
-   lapiz = new Lapiz(e.ClientX, e.ClientY, 'black', ctx, 'black');
+let lapiz = null;
 
 
-})
-// boton en movimiento
-canvas.addEventListener('mousemove', (e) => {
-   mousemove = true;
-     if(mouseDown == true && (lapiz != null)){
+// ##############################################################################################
 
-           lapiz.moveTo(e.layerX, e.layerY);
-           lapiz.draw();
-     }
-})
-
-
-
-//  evento de boton soltado 
-
-canvas.addEventListener('mouseup', (e) => {
-
-   mouseDown = false;
-   lapiz = null;
-   mousemove = false;
-   mouseUp = true;
-
-  
-
-
-
-})
-
-
-
-
-
-function dibujarCanvas (){
-
+//  dibujar el canvas 
+function dibujarCanvas() {
    ctx.beginPath();
-   ctx.fillStyle ='pink';
-   //   pintar y rellenar el canvas
-   ctx.fillRect(0,0,canvasWidth,canvasHeight);
-   
-   ctx.strokeStyle= 'black';
-   ctx.stroke();
-   ctx.lineWidth = 2;
+   ctx.fillStyle = 'pink'; // Fondo
+   ctx.fillRect(0, 0, canvasWidth, canvasHeight);
    ctx.closePath();
 }
 
 
+// ####################################################################################################
 
+// Eventos del mouse
+canvas.addEventListener('mousedown', (e) => {
+    mouseDown = true;
 
+   //  obtener posicion exacta dentro del canvas para el arreglo del fucking bug del cursor =) 
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-   function main() {
-           dibujarCanvas();
-   }
+    // Crear nueva instancia de Lapiz cuando se presiona el mouse
+    lapiz = new Lapiz(x, y, 'black', ctx, 'stroke');
+});
 
+canvas.addEventListener('mousemove', (e) => {
+    if (mouseDown && lapiz) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
+        lapiz.moveTo(x, y);
+        lapiz.draw();
+    }
+});
 
+canvas.addEventListener('mouseup', () => {
+    mouseDown = false;
+    lapiz = null;
+});
+// ########################################################################################3333
 
+// Esperar a que el DOM esté listo
+window.addEventListener('load', main);
 
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
+// main debe llamarse cuando todo esté cargado
+function main() {
+   dibujarCanvas();
+}   
 
 
