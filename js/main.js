@@ -7,6 +7,43 @@ let canvasHeight = canvas.height;
 
 let mouseDown = false;
 let lapiz = null;
+let Myimage = null;
+
+let file_input = document.getElementById('file');
+
+
+// ############################# funciones relacionadas con la imagen ############################
+
+file_input.addEventListener('change', (e) => {
+
+    Myimage.loadImage(e.target.files[0]);
+    console.log("intentando cargar imagen");
+    e.target.value = null; // Limpiar el input después de cargar la imagen
+    
+
+
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // ##############################################################################################
@@ -16,6 +53,9 @@ function dibujarCanvas() {
    ctx.beginPath();
    ctx.fillStyle = 'pink'; // Fondo
    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+   ctx.strokeStyle = 'black'; // Color del borde
+   ctx.stroke();
+
    ctx.closePath();
 }
 
@@ -50,6 +90,16 @@ canvas.addEventListener('mouseup', () => {
     mouseDown = false;
     lapiz = null;
 });
+
+
+
+
+
+
+
+
+
+
 // ########################################################################################3333
 
 // Esperar a que el DOM esté listo
@@ -58,6 +108,9 @@ window.addEventListener('load', main);
 // main debe llamarse cuando todo esté cargado
 function main() {
    dibujarCanvas();
+   Myimage = new Image(canvasWidth, canvasHeight, ctx);
 }   
+
+
 
 
