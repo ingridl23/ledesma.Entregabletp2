@@ -12,7 +12,7 @@ class Imagen {
       this.actualHeight = this.height;
       this.image = new Image(); // ¡IMPORTANTE! usar Image, no Imagen
 
-      this.image.src = URL.createObjectURL(file); // crear url temporal para evitar error
+      this.image.src = URL.createObjectURL(file); // crea url temporal para evitar error
 
       this.image.onload = () => {
           this.cargada = true;
@@ -33,7 +33,7 @@ class Imagen {
               imgWidth = this.height * imageRatio;
           }
 
-
+        // obtenemos y lo plasmamos en el canvas
           this.ctx.drawImage(this.image, 0, 0, this.width, this.height);
           this.imageData = this.ctx.getImageData(0, 0, imgWidth, imgHeight);
       };
@@ -45,7 +45,7 @@ class Imagen {
 
 
 
-
+// ################## filtro de grises
    escalaDeGrises() {
          console.log("boton presionado");
 
@@ -71,9 +71,9 @@ class Imagen {
 
 
 
-
-  BlurImage(){
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+// ############# filtro de blur
+    BlurImage(){
+    let imageData = this.ctx.getImageData(0, 0, this.actualWidth, this.actualHeight);
     let data = imageData.data;
     let kernel = [];
     let kernelSize = 3;
@@ -83,8 +83,8 @@ class Imagen {
             kernel[i][j] = 1;
         }
     }
-    for (let y = 0; y < canvas.height; y++) {
-        for (let x = 0; x < canvas.width; x++) {
+    for (let y = 0; y < this.actualHeight; y++) {
+        for (let x = 0; x < this.actualWidth; x++) {
             let sumR = 0;
             let sumG = 0;
             let sumB = 0;
@@ -98,8 +98,8 @@ class Imagen {
                 for (let j = 0; j < kernelSize; j++) {
                     offsetX = x + i - Math.floor(kernelSize / 2);
                     offsetY = y + j - Math.floor(kernelSize / 2);
-                    if (offsetX < 0 || offsetY < 0 || offsetX > canvas.width -1 || offsetY > canvas.height -1) { continue; }
-                    index = (offsetX + (offsetY * canvas.width)) * 4;
+                    if (offsetX < 0 || offsetY < 0 || offsetX > this.actualWidth -1 || offsetY > this.actualHeight -1) { continue; }
+                    index = (offsetX + (offsetY * this.actualWidth)) * 4;
                     valorKernel = kernel[i][j];
                     sumR += data[index] * valorKernel;
                     sumG += data[index + 1] * valorKernel;
@@ -107,14 +107,16 @@ class Imagen {
                     cant++;
                 }
             }
-            indice = (x + (y * canvas.width)) * 4;
+            indice = (x + (y * this.actualWidth)) * 4;
             data[indice] = sumR / cant;
             data[indice + 1] = sumG / cant;
             data[indice + 2] = sumB / cant;
         }
     }
-    ctx.putImageData(imageData, 0, 0);
+    this.ctx.putImageData(imageData, 0, 0);
   }
 
 }
+
+
 

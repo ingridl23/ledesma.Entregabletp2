@@ -19,6 +19,8 @@ function main() {
     const file_input = document.getElementById('file');
     const colorPicker = document.getElementById('color');
 
+    const clearTodo = document.getElementById('borrar');
+
     let mouseDown = false;
     let lapiz = null;
     let Myimage = new Imagen(canvasWidth, canvasHeight, ctx);
@@ -54,6 +56,7 @@ function main() {
     });
     
     
+    // # evento de aplicar escala de grises a la imagen
     
     btnFil1.addEventListener('click', () => {
 
@@ -67,6 +70,8 @@ function main() {
 
     })
 
+    // # evento de aplicar filtro de blur a la imagen
+
     btnBlur.addEventListener('click', () => {
 
          if(Myimage.cargada){
@@ -75,6 +80,20 @@ function main() {
              console.log('el boton no existe o no funciona');
            }
     })
+
+    // ##evento de borrar lapiz y/o imagen cargada
+
+    clearTodo.addEventListener('click', () => {
+        ctx.clearRect(0,0, canvasWidth , canvasHeight);
+        dibujarCanvas(ctx, canvasWidth, canvasHeight);
+
+        
+    // 3. Reiniciar la imagen cargada 
+    Myimage = new Imagen(canvasWidth, canvasHeight, ctx);
+
+    console.log('Canvas e imagen limpiados.');
+    })
+   
 
 }
 

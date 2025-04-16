@@ -7,8 +7,7 @@ class Lapiz extends Paint{
         
         this.antx = x;
         this.anty = y;
-        // this.width = width;
-        // this.height = height;
+ 
          this.style = style;
     }
 
@@ -17,7 +16,7 @@ class Lapiz extends Paint{
        this.ctx.beginPath();
        this.ctx.strokeStyle = this.fill;
        this.ctx.fillStyle = this.fill;
-    //    this.ctx.fillRect(this.x, this.y, 2, 2);
+    
        this.ctx.moveTo(this.antx, this.anty);
        this.ctx.lineTo(this.x, this.y);
        this.ctx.stroke();
@@ -83,8 +82,7 @@ class Lapiz extends Paint{
     }
     
 
-   
-    
+  
   
 
 

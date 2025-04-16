@@ -5,23 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ledesma entregable tp2</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body onload ="main()">
 
-    <br>
-    
+    <div id="container">
+        <header>
+          <input type="file" id="file" />
+          <button id="filtro1" tittle="filtro gris">Gris</button>
+          <button id="filtro2" title ="filtro blur">Blur</button>
 
-    <canvas id ="canvas" width="800" height="600"></canvas>
-    <input type ="file" id="file"  >
-    <button> borrador</button>
-    <input type="color" id="color" value="#000000">
-    <button id="filtro1"> gris</button>
-    <button id="filtro2"> blur</button>
-    <!--
+ <!--
     <button> filtro 3</button>
     <button> filtro 4</button>
     <button> filtro 5</button>
-    <button> filtro 6</button> -->
+    <button> filtro 6</button>
+     -->
+
+        </header>
+    
+    
+        <aside>
+            <nav>
+            
+              <!-- Botón con ícono -->
+              <button id="borrar" title="borrar"><i class="fas fa-trash-alt"></i></button>
+              <button id="pincel" title="Pincel">✏️</button>
+              <button id="rectangulo" title="Rectángulo">▭</button>
+              <button id="elipse" title="Elipse">⬭</button>
+              <button id="picker-btn" title="picker">🎨</button>
+            </nav>
+          </aside>
+
+
+
+    <main>
+
+        <canvas id ="canvas" width="800" height="600"></canvas>
+    </main>
+    
+   
+      
+
+
+        <footer>  
+            <input type="color" id="color" value="#000000" title="paleta de tonos">
+        
+        </footer>
+
+    </div>
+   
 
      
   
