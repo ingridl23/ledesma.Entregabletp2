@@ -67,4 +67,54 @@ class Imagen {
          }
           this.ctx.putImageData(imageData,0,0);
    }
+
+
+
+
+
+  BlurImage(){
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let data = imageData.data;
+    let kernel = [];
+    let kernelSize = 3;
+    for (let i = 0; i < kernelSize; i++) {
+        kernel[i] = [];
+        for (let j = 0; j < kernelSize; j++) {
+            kernel[i][j] = 1;
+        }
+    }
+    for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+            let sumR = 0;
+            let sumG = 0;
+            let sumB = 0;
+            let cant = 0;
+            let offsetX;
+            let offsetY;
+            let index;
+            let indice;
+            let valorKernel;
+            for (let i = 0; i < kernelSize; i++) {
+                for (let j = 0; j < kernelSize; j++) {
+                    offsetX = x + i - Math.floor(kernelSize / 2);
+                    offsetY = y + j - Math.floor(kernelSize / 2);
+                    if (offsetX < 0 || offsetY < 0 || offsetX > canvas.width -1 || offsetY > canvas.height -1) { continue; }
+                    index = (offsetX + (offsetY * canvas.width)) * 4;
+                    valorKernel = kernel[i][j];
+                    sumR += data[index] * valorKernel;
+                    sumG += data[index + 1] * valorKernel;
+                    sumB += data[index + 2] * valorKernel;
+                    cant++;
+                }
+            }
+            indice = (x + (y * canvas.width)) * 4;
+            data[indice] = sumR / cant;
+            data[indice + 1] = sumG / cant;
+            data[indice + 2] = sumB / cant;
+        }
+    }
+    ctx.putImageData(imageData, 0, 0);
+  }
+
 }
+

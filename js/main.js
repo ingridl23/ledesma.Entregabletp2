@@ -13,7 +13,9 @@ function main() {
     const ctx = canvas.getContext('2d');
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
+
     const btnFil1 = document.getElementById('filtro1');
+    const btnBlur = document.getElementById('filtro2');
     const file_input = document.getElementById('file');
     const colorPicker = document.getElementById('color');
 
@@ -65,7 +67,14 @@ function main() {
 
     })
 
+    btnBlur.addEventListener('click', () => {
 
+         if(Myimage.cargada){
+                Myimage.BlurImage();
+           }else{
+             console.log('el boton no existe o no funciona');
+           }
+    })
 
 }
 
