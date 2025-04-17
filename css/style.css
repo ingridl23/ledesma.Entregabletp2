@@ -29,6 +29,25 @@
     padding: 8px;
     gap: 8px;
     border-bottom: 1px solid #aaa;
+
+
+  }
+
+  header button{
+    background-color: #bdbdbd;
+    border: 1px solid #eee;
+    border-right-color: #000;
+    border-bottom-color: #000;
+    padding : 7px;
+  }
+
+  #descarga {
+    background-color: #807979;
+    border :1px solid  #eee;
+    border-right-color: #352f2f;
+    border-bottom-color:  #352f2f;
+    font-size: 17px;
+    padding: 4px;
   }
   
   aside {
