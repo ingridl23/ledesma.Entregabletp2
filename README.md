@@ -64,10 +64,10 @@ La app permite al usuario crear y editar imágenes, aplicar filtros, y utilizar 
 
 ```plaintext
 📁 paint-app/
-├── index.html
-├── styles/
-│   └── sstyles.css
+|
+├── css/
+│   └── styles.css
 ├── js/
-│
-
+│    
+|__ index.html
 ├── README.md
