@@ -16,15 +16,21 @@ function main() {
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
+
     const btnFil1 = document.getElementById('filtro1');
     const btnBlur = document.getElementById('filtro2');
     const btnSobel = document.getElementById('filtro3');
     const btnNegative= document.getElementById('filtro4');
     const btnSepia = document.getElementById('filtro5');
+    const btnBrillo = document.getElementById('filtro6');
+    const btnSaturacion = document.getElementById('filtro7');
+    const btnBordes = document.getElementById('filtro8');
 
 
+    const btnDescargar = document.getElementById('descargar');
     const file_input = document.getElementById('file');
     const colorPicker = document.getElementById('color');
+
 
     const clearTodo = document.getElementById('borrar');
     const btnReverse = document.getElementById('reverse');
@@ -38,6 +44,8 @@ function main() {
     let modoActual = null; // puede ser 'lapiz', 'rectangulo', etc.
  
     let herramienta= null ;
+
+
     // Dibujar el fondo del canvas
     dibujarCanvas(ctx, canvasWidth, canvasHeight);
 
@@ -167,6 +175,8 @@ canvas.addEventListener('mousedown', (e) => {
            }
      })
 
+
+    //   evento de aplicar filtro negativo a la imagen  
      btnNegative.addEventListener('click', ()=> {
           if(Myimage.cargada){
                Myimage.FiltroNegativo();
@@ -175,6 +185,8 @@ canvas.addEventListener('mousedown', (e) => {
           }
      })
 
+
+    //  evento de aplicar filtro sepia a la imagen
 
     btnSepia.addEventListener('click',()=> {
            if(Myimage.cargada){
@@ -185,11 +197,47 @@ canvas.addEventListener('mousedown', (e) => {
     })
 
 
-        
-    // 3. Reiniciar la imagen cargada 
-    Myimage = new Imagen(canvasWidth, canvasHeight, ctx);
 
-    console.log('Canvas e imagen limpiados.');
+    //  evento de aplicar brillo a la imagen
+
+
+    btnBrillo.addEventListener ('click', ()=>{
+           if(Myimage.cargada){
+                 Myimage.FiltroBrillo();
+           }else{
+                console.log('el boton no existe o el filtro de brillo no funciona');
+           }
+    })
+
+    // evento de aplicar saturacion a la imagen
+
+    btnSaturacion.addEventListener('click', ()=>{
+        if(Myimage.cargada){
+            Myimage.AplicarSaturacion();
+      }else{
+           console.log('el boton no existe o el filtro de saturacion no funciona');
+      }
+
+
+    })
+
+
+    // evento de identificar los bordes de la imagen mediante un filtro oscuro
+
+
+        btnBordes.addEventListener('click', ()=>{
+            if(Myimage.cargada){
+                Myimage.FiltroBordes();
+          }else{
+               console.log('el boton no existe o el filtro de visualizacion de bordes no funciona');
+          }
+        })
+
+        
+    // //  Reiniciar la imagen cargada  
+    // Myimage = new Imagen(canvasWidth, canvasHeight, ctx);
+
+    // console.log('Canvas e imagen limpiados.');
     
    
 
@@ -206,7 +254,18 @@ canvas.addEventListener('mousedown', (e) => {
         }
     })
 
+    //   ################# boton para guardar el proyecto finalizado ##########33
+    
+        btnDescargar.addEventListener('click',()=> {
+            const link = document.createElement('a');
+            link.download = 'mi-dibujo.png';  // Nombre del archivo
+            link.href = canvas.toDataURL('image/jpeg', 0.9); // calidad 90%
+            link.click(); // Dispara la descarga
+        })
 }
+// cierre de main 
+
+
 
 //############################### dibujar canvas ###################3
 

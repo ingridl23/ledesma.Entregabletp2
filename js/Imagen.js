@@ -7,6 +7,12 @@ class Imagen {
       this.imageData = null;
   }
 
+
+
+
+
+
+//   #####funcionalidad de carga de imagen y ajuste de dimensiones al canvas ###########################3333
   loadImage(file) {
 
     this.originalImage = file;
@@ -50,10 +56,10 @@ class Imagen {
   }
 
   
-  
+
   
 
-// ################## filtro de grises
+// ################## filtro de grises #########################
    escalaDeGrises() {
          console.log("boton presionado");
 
@@ -79,7 +85,7 @@ class Imagen {
 
 
 
-// ############# filtro de blur
+// ############# filtro de blur ###################################3
     BlurImage(){
     let imageData = this.ctx.getImageData(0, 0, this.actualWidth, this.actualHeight);
     let data = imageData.data;
@@ -126,7 +132,7 @@ class Imagen {
 
 
 
-//   filtro de sobel 
+//   filtro de sobel #######################################################
 
   SobelFiltro() {
     const imageData = this.ctx.getImageData(0, 0, this.actualWidth, this.actualHeight);
@@ -134,7 +140,7 @@ class Imagen {
     const width = this.actualWidth;
     const height = this.actualHeight;
 
-    // Matriz 2 del video (Sobel vertical)
+    // Matriz  (Sobel vertical)
     const kernel = [
         [-1, -2, -1],
         [ 0,  0,  0],
@@ -175,7 +181,7 @@ class Imagen {
 
 
 
-//  filtro negativo aplicado a la imagen cargada 
+//  filtro negativo aplicado a la imagen cargada  ##########################################3
 
 
 FiltroNegativo() {
@@ -194,7 +200,7 @@ FiltroNegativo() {
     this.ctx.putImageData(imageData, 0, 0);
 }
 
-
+// ############### filtro para la imagen sepia ###############################################
 
  FiltroSepia(){
      
@@ -233,8 +239,92 @@ FiltroNegativo() {
 
  }
 
+//  ############## filtro para la imagen de aplicacion de brillo #############
+
+FiltroBrillo(){
+    let valor = 40;
+        const imageData = this.ctx.getImageData(0, 0, this.actualWidth, this.actualHeight);
+        const data = imageData.data;
+    
+        for (let i = 0; i < data.length; i += 4) {
+            data[i]     = Math.min(255, data[i] + valor);     // R
+            data[i + 1] = Math.min(255, data[i + 1] + valor); // G
+            data[i + 2] = Math.min(255, data[i + 2] + valor); // B
+        }
+    
+        this.ctx.putImageData(imageData, 0, 0);
+    }
+    
+
+
+
+AplicarSaturacion(){
+    let factor = 1.5;
+        const imageData = this.ctx.getImageData(0, 0, this.actualWidth,this.actualHeight);
+        const data = imageData.data;
+    
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+    
+            // Convertir a escala de grises para obtener luminancia
+            const gray = 0.3 * r + 0.59 * g + 0.11 * b;
+    
+            data[i]     = Math.min(255, gray + (r - gray) * factor);
+            data[i + 1] = Math.min(255, gray + (g - gray) * factor);
+            data[i + 2] = Math.min(255, gray + (b - gray) * factor);
+        }
+    
+        this.ctx.putImageData(imageData, 0, 0);
+    
+    
 
 }
 
 
 
+FiltroBordes(){
+
+
+        const imageData = this.ctx.getImageData(0, 0, this.actualWidth, this.actualHeight);
+        const data = imageData.data;
+    
+        const width = this.actualWidth;
+        const height = this.actualHeight;
+    
+        const output = this.ctx.createImageData(width, height);
+    
+        const kernel = [
+            [ 0, -1,  0],
+            [-1,  4, -1],
+            [ 0, -1,  0]
+        ];
+    
+        const getGray = (i) => 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
+    
+        for (let y = 1; y < height - 1; y++) {
+            for (let x = 1; x < width - 1; x++) {
+                let sum = 0;
+    
+                for (let ky = -1; ky <= 1; ky++) {
+                    for (let kx = -1; kx <= 1; kx++) {
+                        const px = (y + ky) * width + (x + kx);
+                        const gray = getGray(px * 4);
+                        sum += gray * kernel[ky + 1][kx + 1];
+                    }
+                }
+    
+                const i = (y * width + x) * 4;
+                const value = Math.max(0, Math.min(255, sum));
+                output.data[i] = output.data[i + 1] = output.data[i + 2] = value;
+                output.data[i + 3] = 255; // alpha
+            }
+        }
+    
+        this.ctx.putImageData(output, 0, 0);
+    }
+    
+    
+
+}
