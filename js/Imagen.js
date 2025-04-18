@@ -97,6 +97,12 @@ class Imagen {
             kernel[i][j] = 1;
         }
     }
+
+
+    // Aplicación de filtro de convolución sobre la imagen utilizando un kernel.
+   // Por cada píxel (x, y) se recorre una vecindad centrada en ese píxel
+
+
     for (let y = 0; y < this.actualHeight; y++) {
         for (let x = 0; x < this.actualWidth; x++) {
             let sumR = 0;
@@ -108,6 +114,10 @@ class Imagen {
             let index;
             let indice;
             let valorKernel;
+// según el tamaño del kernel, y se calcula una nueva intensidad para los
+// canales R, G y B multiplicando cada valor de píxel vecino por el valor
+// correspondiente del kernel. Se manejan los bordes evitando acceder a
+// píxeles fuera de los límites de la imagen.
             for (let i = 0; i < kernelSize; i++) {
                 for (let j = 0; j < kernelSize; j++) {
                     offsetX = x + i - Math.floor(kernelSize / 2);
@@ -121,6 +131,8 @@ class Imagen {
                     cant++;
                 }
             }
+            //  Finalmente, se actualiza el
+            // valor del píxel central con el promedio ponderado según el kernel.
             indice = (x + (y * this.actualWidth)) * 4;
             data[indice] = sumR / cant;
             data[indice + 1] = sumG / cant;
@@ -140,7 +152,7 @@ class Imagen {
     const width = this.actualWidth;
     const height = this.actualHeight;
 
-    // Matriz  (Sobel vertical)
+    // Matriz  (Sobel vertical) depende la matriz es como se aplica a los pixeles afectados y la sombra resultante
     const kernel = [
         [-1, -2, -1],
         [ 0,  0,  0],
@@ -239,9 +251,11 @@ FiltroNegativo() {
 
  }
 
-//  ############## filtro para la imagen de aplicacion de brillo #############
+//  ############## filtro para la imagen de aplicacion de brillo #############################
 
 FiltroBrillo(){
+
+    // se le asigna el valor desde aqui pero se podria modificar para que el usuario eligiars la intensidad
     let valor = 40;
         const imageData = this.ctx.getImageData(0, 0, this.actualWidth, this.actualHeight);
         const data = imageData.data;
@@ -252,14 +266,19 @@ FiltroBrillo(){
             data[i + 2] = Math.min(255, data[i + 2] + valor); // B
         }
     
+        // plasmamos al canvas
         this.ctx.putImageData(imageData, 0, 0);
     }
     
 
 
 
+    // ####################### metodo de aplicar filtro de saturacion a la imagen cargada
+
+
 AplicarSaturacion(){
     let factor = 1.5;
+
         const imageData = this.ctx.getImageData(0, 0, this.actualWidth,this.actualHeight);
         const data = imageData.data;
     
@@ -270,21 +289,24 @@ AplicarSaturacion(){
     
             // Convertir a escala de grises para obtener luminancia
             const gray = 0.3 * r + 0.59 * g + 0.11 * b;
-    
+    //    aplicamos
             data[i]     = Math.min(255, gray + (r - gray) * factor);
             data[i + 1] = Math.min(255, gray + (g - gray) * factor);
             data[i + 2] = Math.min(255, gray + (b - gray) * factor);
         }
-    
+    // plasmamos al canvas
         this.ctx.putImageData(imageData, 0, 0);
     
     
 
 }
 
-
+// #########  metodo de aplicar filtro de deteccion de bordes a la imagen cargada#############
 
 FiltroBordes(){
+
+// Aplicación de un filtro Laplaciano para detección de bordes sobre una imagen en escala de grises.
+
 
 
         const imageData = this.ctx.getImageData(0, 0, this.actualWidth, this.actualHeight);
@@ -300,7 +322,8 @@ FiltroBordes(){
             [-1,  4, -1],
             [ 0, -1,  0]
         ];
-    
+    // Se convierte cada píxel a gris con una fórmula ponderada y luego se aplica un kernel 3x3 centrado
+    // en el píxel actual, multiplicando cada vecino por el valor correspondiente del kernel.
         const getGray = (i) => 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
     
         for (let y = 1; y < height - 1; y++) {
@@ -317,6 +340,10 @@ FiltroBordes(){
     
                 const i = (y * width + x) * 4;
                 const value = Math.max(0, Math.min(255, sum));
+
+ // El resultado se almacena en una nueva imagen (`output`), y se asegura que los valores estén
+// en el rango válido [0, 255]. Esta técnica resalta bordes y contornos en la imagen.
+
                 output.data[i] = output.data[i + 1] = output.data[i + 2] = value;
                 output.data[i + 3] = 255; // alpha
             }
@@ -326,6 +353,13 @@ FiltroBordes(){
     }
     
     
+
+
+
+    
+
+
+    // ##################metodo aplicar filtro de  binarizacion a la imagen cargada al canvas ########
 
     AplicarBinarizacion(){
         let umbral = 128;
