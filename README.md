@@ -7,8 +7,8 @@
 **Profesores:**  
 - Ing. Hernández Gauna, Jorge G.  
 - A.P. Nelson Garrido  
-**Ayudante Alumno:** Arana, Facundo
-** Alumno:** Ledesma, Ingrid Milagros
+- **Ayudante Alumno:** Arana, Facundo
+- ** Alumno:** Ledesma, Ingrid Milagros
 ---
 
 ## 📝 Descripción
