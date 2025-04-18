@@ -31,15 +31,18 @@ La app permite al usuario crear y editar imágenes, aplicar filtros, y utilizar 
 - Iniciar con un **canvas en blanco**.
 - Cargar una **imagen desde el disco** (utilizando diálogo de selección).
 
-✅ **Filtros disponibles (6 en total):**
+✅ **Filtros disponibles (9 en total):**
 - 🎨 Simples:
   - Negativo
   - Brillo
   - Binarización
   - Sepia
+  - Escala de grises
 - 🧠 Avanzados:
-  - Detección de bordes (Sobel)
+  - Detección de bordes
   - Desenfoque (Blur)
+  - Saturacion
+  - Sobel
 
 ✅ **Guardar o descartar imagen:**
 - Permite guardar la imagen editada en disco.
