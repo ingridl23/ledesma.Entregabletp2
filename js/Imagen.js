@@ -327,4 +327,25 @@ FiltroBordes(){
     
     
 
-}
+    AplicarBinarizacion(){
+        let umbral = 128;
+            const imageData = this.ctx.getImageData(0, 0, this.width, this.height);
+            const data = imageData.data;
+        
+            for (let i = 0; i < data.length; i += 4) {
+                // Promedio de los canales RGB (escala de grises)
+                const gris = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        
+                const color = gris >= umbral ? 255 : 0;
+        
+                data[i]     = color; // R
+                data[i + 1] = color; // G
+                data[i + 2] = color; // B
+                // Alpha (data[i + 3]) no se toca
+            }
+        
+            this.ctx.putImageData(imageData, 0, 0);
+        }
+        
+    }
+

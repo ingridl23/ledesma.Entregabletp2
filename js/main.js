@@ -25,6 +25,7 @@ function main() {
     const btnBrillo = document.getElementById('filtro6');
     const btnSaturacion = document.getElementById('filtro7');
     const btnBordes = document.getElementById('filtro8');
+    const btnBinarizacion = document.getElementById('filtro9');
 
 
     const btnDescargar = document.getElementById('descargar');
@@ -233,12 +234,22 @@ canvas.addEventListener('mousedown', (e) => {
           }
         })
 
-        
-    // //  Reiniciar la imagen cargada  
-    // Myimage = new Imagen(canvasWidth, canvasHeight, ctx);
 
-    // console.log('Canvas e imagen limpiados.');
-    
+
+    //     evento de aplicar el filtro de binarizacion a la imagen cargada en el canvas
+
+
+        btnBinarizacion.addEventListener('click', ()=>{
+              if(Myimage.cargada){
+                   Myimage.AplicarBinarizacion();
+              }else{
+                console.log('el boton no existe o el filtro de binarizacion no funciona o no se aplica');
+              }
+        })
+
+
+        
+  
    
 
     // # evento de reestablecer imagen con filtro/s aplicado/s a su modo original
